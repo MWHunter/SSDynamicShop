@@ -17,11 +17,15 @@ public class UpdateCheck {
 
     public UpdateCheck() {
         newVersion = DynamicShop.plugin.getDescription().getVersion();
-        try {
-            checkURL = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + PROJECT_ID);
-        } catch (MalformedURLException e) {
-            Bukkit.getLogger().warning("§4Could not connect to Spigot for updates!");
-        }
+
+        Bukkit.getScheduler().runTaskAsynchronously(DynamicShop.plugin, () -> {
+            try {
+                checkURL = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + PROJECT_ID);
+            } catch (MalformedURLException e) {
+                Bukkit.getLogger().warning("§4Could not connect to Spigot for updates!");
+            }
+        });
+
         initUpdater();
     }
 
